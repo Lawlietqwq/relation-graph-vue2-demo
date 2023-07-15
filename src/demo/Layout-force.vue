@@ -1,6 +1,12 @@
 <template>
   <div>
     <div style="height: calc(100vh - 50px)">
+      <div class="filter-container">
+        <el-input v-model="ts_code" placeholder="股票代码" style="width: 200px;" />
+        <el-button v-waves style="margin-left: 10px;" type="primary" icon="el-icon-search" @click="searchNode">
+          搜索
+        </el-button>
+      </div>
       <RelationGraph
         ref="seeksRelationGraph"
         :options="graphOptions"
@@ -13,12 +19,14 @@
 
 <script>
 // 如果您没有在main.js文件中使用Vue.use(RelationGraph); 就需要使用下面这一行代码来引入relation-graph
-// import RelationGraph from 'relation-graph';
+import RelationGraph from 'relation-graph';
+import {getHolderNode}, {getStockNode} from '@/api/request.js';
 export default {
   name: "Demo",
   components: {},
   data() {
     return {
+      ts_code: null,
       isShowCodePanel: false,
       graphOptions: {
         debug: true,
@@ -266,6 +274,9 @@ export default {
           // 这些写上当图谱初始化完成后需要执行的代码
         }
       );
+    },
+    searchNode(ts_code){
+
     },
     onNodeClick(nodeObject, $event) {
       console.log("onNodeClick:", nodeObject);
